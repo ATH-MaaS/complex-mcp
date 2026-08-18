@@ -66,6 +66,8 @@ class TicketmasterSession:
                 {**e, "price_min": _to_float(e.get("price_min"), 0.0), "price_max": _to_float(e.get("price_max"), 0.0)}
                 for e in info.get("events", [])
             ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightTicketmaster')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

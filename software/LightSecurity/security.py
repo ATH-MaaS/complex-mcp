@@ -126,6 +126,8 @@ class SecuritySession:
             self._seed_alarms()
             self._seed_events()
             self._seed_access_logs()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightSecurity')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

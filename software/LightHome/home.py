@@ -111,6 +111,8 @@ class HomeSession:
             self._seed_devices()
             self._seed_scenes()
             self._seed_automations()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightHome')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

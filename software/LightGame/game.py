@@ -110,6 +110,8 @@ class GameSession:
             self.wishlist: Dict[str, Wishlist] = {}
             self._game_order: List[str] = []
             self._seed_all()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightGame')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

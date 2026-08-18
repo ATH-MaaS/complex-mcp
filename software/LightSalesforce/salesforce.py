@@ -67,6 +67,8 @@ class SalesforceSession:
                 self.tables[sobject] = [
                     self._coerce_row(dict(r), sobject) for r in info.get(table, [])
                 ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightSalesforce')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

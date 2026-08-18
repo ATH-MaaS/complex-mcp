@@ -49,6 +49,8 @@ class AuctionSession:
             self.bids: Dict[str, Bid] = {}
             self.watchlist: List[str] = []
             self._seed()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightAuction')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

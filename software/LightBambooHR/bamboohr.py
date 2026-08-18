@@ -56,6 +56,8 @@ class BamboohrSession:
             ]
             self.whos_out: List[Dict[str, Any]] = list(info.get("whos_out", []))
             self.company: Dict[str, Any] = dict(info.get("company", {}))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightBambooHR')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

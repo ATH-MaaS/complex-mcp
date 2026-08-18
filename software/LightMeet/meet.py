@@ -54,6 +54,8 @@ class MeetSession:
             self.meetings: Dict[str, Meeting] = {}
             self._today = datetime(2026, 1, 5)
             self._seed_meetings()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightMeet')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

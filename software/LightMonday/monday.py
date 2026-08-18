@@ -56,6 +56,8 @@ class MondaySession:
             self.users: List[Dict[str, Any]] = [
                 {**u, "is_admin": _to_bool(u.get("is_admin", False))} for u in info.get("users", [])
             ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightMonday')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

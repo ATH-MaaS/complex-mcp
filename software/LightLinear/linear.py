@@ -204,6 +204,8 @@ class LinearSession:
 
             self._next_issue_number = max((i["number"] for i in self.issues), default=0) + 1
             self._next_comment_id = len(self.comments) + 1
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightLinear')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

@@ -52,6 +52,8 @@ class AlpacaSession:
             self.orders: List[Dict[str, Any]] = self._coerce_orders(info.get("orders", []))
             self.assets: List[Dict[str, Any]] = self._coerce_assets(info.get("assets", []))
             self.quotes: Dict[str, Any] = self._coerce_quotes(info.get("quotes", []))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightAlpaca')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

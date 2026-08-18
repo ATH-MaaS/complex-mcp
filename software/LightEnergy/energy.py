@@ -109,6 +109,8 @@ class EnergySession:
             self._seed_readings()
             self._seed_bills()
             self._seed_alerts()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightEnergy')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

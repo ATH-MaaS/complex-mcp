@@ -86,6 +86,8 @@ class ZillowSession:
                 "min_baths": _to_float(r.get("min_baths")),
                 "city": _opt_str(r.get("city")),
             } for r in info.get("saved_searches", [])]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightZillow')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

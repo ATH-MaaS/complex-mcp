@@ -137,6 +137,8 @@ class BoxSession:
                 for r in info.get("files", [])
             ]
             self.file_blobs: Dict[str, str] = dict(info.get("file_blobs", {}))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightBox')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

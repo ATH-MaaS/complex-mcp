@@ -70,6 +70,8 @@ class PagerDutySession:
             self.schedules: List[Dict[str, Any]] = list(info.get("schedules", []))
 
             self.notes_store: Dict[str, List[Dict[str, Any]]] = {}
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightPagerDuty')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

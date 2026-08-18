@@ -69,6 +69,8 @@ class TaxSession:
             self._seed_filings()
             self._seed_income_sources()
             self._seed_deductions()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightTax')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

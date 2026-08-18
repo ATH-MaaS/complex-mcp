@@ -67,6 +67,8 @@ class DocusignSession:
             self.templates: List[Dict[str, Any]] = [
                 {**t, "shared": _to_bool(t.get("shared", False))} for t in info.get("templates", [])
             ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightDocuSign')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

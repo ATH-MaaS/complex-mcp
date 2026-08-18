@@ -96,6 +96,8 @@ class KrakenSession:
             self.balances: List[Dict[str, Any]] = [
                 {"asset": r["asset"], "balance": r["balance"]} for r in info.get("balances", [])
             ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightKraken')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

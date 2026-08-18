@@ -94,6 +94,8 @@ class FlightSession:
             self.my_starred_airports = set()
 
             self.enter_password = False
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightFlight')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

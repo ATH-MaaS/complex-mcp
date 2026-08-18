@@ -19,6 +19,19 @@ Recipe per app:
         restore_into(self, path); self.os = <live connector>
      (restore_into copies the frozen attributes onto `self`; pickle never calls
      __init__, so a changed/seedless class body is fine.)
+
+A4 reconciliation -- seed vs. content, two different guarantees:
+  `resolve_seed()` below always drives `self.rng`, so ids/timestamps/minted
+  values are reproducible for a given seed (tests/test_seed_plumbing.py).
+  That is NOT the same as "content varies by seed" -- ~102 of 138 apps load
+  their substantive content (listings, tickets, messages, ...) from a static
+  per-app corpus that a seed change never touches; only ~36 apps' content
+  actually differs across seeds. See software/utils/seed_content_registry.py
+  for the empirically-derived per-app answer. For task authors who need
+  per-task content control on a seed-static app, the mechanism is
+  software.utils.world_data (hydrate) or software.utils.fixtures, not seed;
+  run_benchmark.py logs a one-time advisory when a task's declared seed
+  can't actually do anything for one of its apps.
 """
 from __future__ import annotations
 

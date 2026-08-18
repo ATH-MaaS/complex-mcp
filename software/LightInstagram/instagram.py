@@ -152,6 +152,8 @@ class InstagramSession:
             self._next_comment_id = 17800001051
             self._next_media_id = 17900001029
             self._next_container_id = 17920001001
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightInstagram')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

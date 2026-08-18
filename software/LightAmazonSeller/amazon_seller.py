@@ -79,6 +79,8 @@ class AmazonSellerSession:
 
             self._next_report_id = 11
             self._next_return_id = 6
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightAmazonSeller')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

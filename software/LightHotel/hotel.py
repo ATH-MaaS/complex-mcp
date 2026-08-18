@@ -94,6 +94,8 @@ class HotelSession:
             self._seed_hotels()
             self._seed_reservations()
             self._seed_reviews()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightHotel')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

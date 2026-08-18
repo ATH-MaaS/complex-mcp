@@ -66,6 +66,8 @@ class BigcommerceSession:
             self.products: List[Dict[str, Any]] = self._coerce_products(info.get("products", []))
             self.customers: List[Dict[str, Any]] = self._coerce_customers(info.get("customers", []))
             self.orders: List[Dict[str, Any]] = self._coerce_orders(info.get("orders", []))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightBigCommerce')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

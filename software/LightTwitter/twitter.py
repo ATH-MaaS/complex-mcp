@@ -80,6 +80,8 @@ class TwitterSession:
             self.retweets: List[Dict[str, Any]] = list(info.get("retweets", []))
 
             self._me_id = self.users[0]["id"] if self.users else None
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightTwitter')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

@@ -79,6 +79,8 @@ class WebflowSession:
                 }
                 for i in info.get("items", [])
             ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightWebflow')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

@@ -81,6 +81,8 @@ class MicrosoftTeamsSession:
                 }
                 for m in info.get("messages", [])
             ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightMicrosoftTeams')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

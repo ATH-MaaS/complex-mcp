@@ -43,6 +43,8 @@ class OktaSession:
             self.memberships: List[Dict[str, Any]] = list(info.get("group_memberships", []))
             self.apps: List[Dict[str, Any]] = list(info.get("apps", []))
             self.app_assignments: List[Dict[str, Any]] = list(info.get("app_assignments", []))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightOkta')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

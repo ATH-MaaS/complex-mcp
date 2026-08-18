@@ -47,6 +47,8 @@ class MixpanelSession:
             self.events: List[Dict[str, Any]] = self._coerce_events(info.get("events", []))
             self.funnels: Dict[str, Any] = self._coerce_funnels(info.get("funnels", []))
             self.profiles: List[Dict[str, Any]] = self._coerce_profiles(info.get("profiles", []))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightMixpanel')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

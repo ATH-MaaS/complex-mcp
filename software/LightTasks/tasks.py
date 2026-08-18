@@ -74,6 +74,8 @@ class TasksSession:
             self.tasks: Dict[str, Task] = {}
             self._today = datetime(2026, 1, 5)
             self._seed_tasks()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightTasks')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

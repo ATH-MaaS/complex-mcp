@@ -6,6 +6,8 @@ from benchmark.classify_failure import classify as _classify_failure, parse_expe
 from benchmark.passk import estimate as _passk_estimate
 from benchmark.harbor_layout import slug_of as _hslug
 from scripts.task_writer import write_task_dir, write_mcp_stump_run, write_trials_aggregate, parse_trajectory as _parse_traj_for_layout, parse_trajectory
+from software.utils import fixtures
+from software.utils.seed_content_registry import seed_rolls_content
 from dotenv import load_dotenv
 from argparse import ArgumentParser
 from prompt_toolkit import prompt
@@ -27,6 +29,11 @@ from datetime import datetime, timezone
 
 import pandas as pd
 from shortuuid import uuid
+
+# A4 reconciliation (seed_content_registry.py): dedup so the seed/content
+# advisory below prints once per offending app-set per process, not once
+# per task -- a full benchmark run is thousands of tasks.
+_WARNED_STATIC_SEED_APPS = set()
 
 def _aggregate_trials_on_disk(run_dir: Path, model: str) -> dict:
     """Corpus roll-up over EVERY ``trials_*/summary.json`` present on disk.
@@ -537,6 +544,27 @@ def main(args):
             os.environ["COMPLEXMCP_WORLD_DATA"] = str(Path(args.world_data).resolve())
         else:
             os.environ.pop("COMPLEXMCP_WORLD_DATA", None)
+        # A4 reconciliation: task.toml's seed and world_data/fixture are two
+        # independent content mechanisms (see seed_content_registry.py). If a
+        # task declares a seed but no world_data/fixture is active, any app
+        # whose content the registry says is seed-static won't actually vary
+        # -- warn once per offending app-set so this doesn't get discovered by
+        # staring at a state-diff instead.
+        if task_info.get("seed") is not None and not os.environ.get("COMPLEXMCP_WORLD_DATA"):
+            _fixture_apps = {app for (_, app) in fixtures._REGISTRY} if os.environ.get("COMPLEXMCP_FIXTURE") else set()
+            _static_apps = sorted(
+                a for a in apps
+                if a not in _fixture_apps and not seed_rolls_content(a)
+            )
+            if _static_apps and tuple(_static_apps) not in _WARNED_STATIC_SEED_APPS:
+                _WARNED_STATIC_SEED_APPS.add(tuple(_static_apps))
+                print(
+                    f"[seed/content] task {episode_name!r} declares seed="
+                    f"{task_info['seed']} but {_static_apps} load static "
+                    "per-app content that doesn't vary by seed (see "
+                    "seed_content_registry.py) -- supply world_data or a "
+                    "fixture if per-task content variation is expected."
+                )
         # Compute the presented toolset ONCE per task so every attempt in the
         # pass@k loop sees the same distractor sample (the knob is a property of
         # the measurement, not of the individual rollout).

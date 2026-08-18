@@ -104,6 +104,8 @@ class DatadogSession:
                     "base_value": _to_float(r["base_value"]),
                     "amplitude": _to_float(r["amplitude"]),
                 })
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightDatadog')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

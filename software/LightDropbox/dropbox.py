@@ -80,6 +80,8 @@ class DropboxSession:
             # corpus-build time; missing PDF text yields a pdf_extraction_unavailable
             # failure, mirroring the source service when pypdf is absent.
             self.file_blobs: Dict[str, str] = dict(info.get("file_blobs", {}))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightDropbox')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

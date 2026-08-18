@@ -89,6 +89,8 @@ class YelpSession:
                 {"alias": r["alias"], "title": r["title"], "parent_aliases": [r["parent"]]}
                 for r in info.get("categories", [])
             ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightYelp')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

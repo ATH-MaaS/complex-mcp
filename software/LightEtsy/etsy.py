@@ -203,6 +203,8 @@ class EtsySession:
             self._next_receipt_id = max((r["receipt_id"] for r in self.receipts), default=0) + 1
             self._next_image_id = max((i["listing_image_id"] for i in self.listing_images), default=0) + 1
             self._next_review_id = max((r["review_id"] for r in self.reviews), default=0) + 1
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightEtsy')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

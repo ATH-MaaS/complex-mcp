@@ -78,6 +78,8 @@ class MailSession:
             self.user_email = "me@example.com"
             self.messages: Dict[str, Message] = {}
             self._seed_messages()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightMail')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

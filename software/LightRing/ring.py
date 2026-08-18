@@ -110,6 +110,8 @@ class RingSession:
                     "person_alerts": _to_bool(p["person_alerts"]) if p.get("person_alerts") else None,
                     "package_alerts": _to_bool(p["package_alerts"]) if p.get("package_alerts") else None,
                 })
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightRing')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

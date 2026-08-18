@@ -68,6 +68,8 @@ class TypeformSession:
                 {**r, "completed": _to_bool(r["completed"])} for r in info.get("responses", [])
             ]
             self.answers: List[Dict[str, Any]] = [dict(r) for r in info.get("answers", [])]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightTypeform')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

@@ -58,6 +58,8 @@ class ForumSession:
             self.threads: Dict[str, Thread] = {}
             self.posts: Dict[str, Post] = {}
             self._seed()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightForum')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

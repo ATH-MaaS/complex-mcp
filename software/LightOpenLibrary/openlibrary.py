@@ -75,6 +75,8 @@ class OpenlibrarySession:
             ]
             self.subjects: List[Dict[str, Any]] = list(info.get("subjects", []))
             self._authors_by_id = {a["author_id"]: a for a in self.authors}
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightOpenLibrary')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

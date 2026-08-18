@@ -86,6 +86,8 @@ class PlaidSession:
 
             self.item: Dict[str, Any] = dict(info.get("item", {}))
             self.identity: Dict[str, Any] = dict(info.get("identity", {}))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightPlaid')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

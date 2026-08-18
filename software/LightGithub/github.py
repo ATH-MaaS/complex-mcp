@@ -88,6 +88,8 @@ class GithubSession:
                 for c in info.get("comments", [])
             ]
             self.user: Dict[str, Any] = dict(info.get("user", {}))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightGithub')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

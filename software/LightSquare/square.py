@@ -106,6 +106,8 @@ class SquareSession:
             ]
             self.merchant: Dict[str, Any] = info.get("merchant", {})
             self.refunds: List[Dict[str, Any]] = []
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightSquare')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

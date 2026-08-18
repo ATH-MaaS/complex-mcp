@@ -67,6 +67,8 @@ class CalendarSession:
             }
             self.events: Dict[str, Event] = {}
             self._seed_events()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightCalendar')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

@@ -47,6 +47,8 @@ class FigmaSession:
             ]
             self.team: Dict[str, Any] = info.get("team", {})
             self.file_nodes: Dict[str, Any] = info.get("file_nodes", {})
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightFigma')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

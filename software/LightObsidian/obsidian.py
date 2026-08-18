@@ -48,6 +48,8 @@ class ObsidianSession:
                 r["path"]: r["content"].replace("\\n", "\n") for r in info.get("note_contents", [])
             }
             self.vault: Dict[str, Any] = info.get("vault", {})
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightObsidian')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

@@ -111,6 +111,8 @@ class TmdbSession:
                 for r in info.get("tv", [])
             ]
             self._people_by_id = {p["id"]: p for p in self.people}
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightTMDB')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

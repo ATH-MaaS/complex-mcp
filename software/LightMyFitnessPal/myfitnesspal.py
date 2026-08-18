@@ -60,6 +60,8 @@ class MyfitnesspalSession:
             self._next_exercise_id = max((e["exercise_id"] for e in self.exercise_log), default=0) + 1
             self._next_weight_id = max((w["weight_id"] for w in self.weight_log), default=0) + 1
             self._next_water_id = max((w["water_id"] for w in self.water_log), default=0) + 1
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightMyFitnessPal')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

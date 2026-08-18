@@ -62,6 +62,8 @@ class AirtableSession:
             for t in self.tables:
                 key = t["records_csv"].replace(".json", "")
                 self.records[t["id"]] = self._coerce_records(t["id"], info.get(key, []))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightAirtable')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

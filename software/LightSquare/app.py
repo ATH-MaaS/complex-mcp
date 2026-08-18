@@ -47,9 +47,9 @@ async def logout(session_id: str | None = None):
 	del session_dict[session_id]
 	logger.info(f"A user logged out! [{session_id}]")
 	return {
-		"status": "ok",
-		"output": {}
-	}
+        "status": "ok",
+        "output": session.square_session.get_session_dict(),
+    }
 
 
 @mcp.tool

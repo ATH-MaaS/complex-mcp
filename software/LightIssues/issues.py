@@ -91,6 +91,8 @@ class IssuesSession:
             self.comments: Dict[str, Comment] = {}
             self._today = datetime(2026, 1, 5)
             self._seed()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightIssues')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

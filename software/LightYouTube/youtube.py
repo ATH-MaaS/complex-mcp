@@ -61,6 +61,8 @@ class YoutubeSession:
             self.video_categories: List[Dict[str, Any]] = list(info.get("video_categories", []))
             self.channel_sections: List[Dict[str, Any]] = list(info.get("channel_sections", []))
             self.analytics: Dict[str, Any] = dict(info.get("analytics", {}))
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightYouTube')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

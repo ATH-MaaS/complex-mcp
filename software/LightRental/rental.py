@@ -93,6 +93,8 @@ class RentalSession:
             self._seed_assets()
             self._seed_bookings()
             self._seed_damages()
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightRental')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

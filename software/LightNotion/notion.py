@@ -75,6 +75,8 @@ class NotionSession:
             ]
             self.properties: Dict[str, Dict[str, Any]] = self._group_properties(info.get("page_properties", []))
             self.workspace: Dict[str, Any] = info.get("workspace", {})
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightNotion')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

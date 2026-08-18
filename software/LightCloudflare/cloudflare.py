@@ -71,6 +71,8 @@ class CloudflareSession:
             self.page_rules: List[Dict[str, Any]] = [
                 {**r, "priority": _to_int(r.get("priority", 0))} for r in info.get("page_rules", [])
             ]
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightCloudflare')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")

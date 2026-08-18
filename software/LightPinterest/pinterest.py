@@ -133,6 +133,8 @@ class PinterestSession:
             self._next_pin_id = max(
                 (self._extract_numeric_id(p["pin_id"], "pin_") for p in self.pins), default=0
             ) + 1
+            from software.utils.world_data import hydrate as _hydrate_world_data
+            _hydrate_world_data(self, 'LightPinterest')
         else:
             # Seedless: world loaded verbatim from the frozen snapshot.
             restore_into(self, Path(__file__).resolve().parent / "world.pkl")
